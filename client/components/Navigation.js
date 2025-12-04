@@ -91,6 +91,12 @@ export default function Navigation() {
             >
               AI Analyzer
             </Link>
+            <Link 
+              href="/injury-tracking" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/injury-tracking') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Injury Tracking
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"

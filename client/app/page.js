@@ -90,6 +90,14 @@ export default function Home() {
               Få AI-drivna teknikförslag baserat på din situation
             </p>
           </Link>
+
+          <Link href="/injury-tracking" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">🏥</div>
+            <h2 className="text-2xl font-bold mb-2">Injury Prevention</h2>
+            <p className="text-gray-600">
+              Spåra skador, förebygg problem och återhämtning
+            </p>
+          </Link>
         </div>
 
         {/* Quick Actions */}
