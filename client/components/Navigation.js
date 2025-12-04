@@ -85,6 +85,12 @@ export default function Navigation() {
             >
               Community
             </Link>
+            <Link 
+              href="/ai-analyzer" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/ai-analyzer') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              AI Analyzer
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"

@@ -82,6 +82,14 @@ export default function Home() {
               Dela prestationer, följ andra och delta i challenges
             </p>
           </Link>
+
+          <Link href="/ai-analyzer" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">🤖</div>
+            <h2 className="text-2xl font-bold mb-2">AI Technique Analyzer</h2>
+            <p className="text-gray-600">
+              Få AI-drivna teknikförslag baserat på din situation
+            </p>
+          </Link>
         </div>
 
         {/* Quick Actions */}
