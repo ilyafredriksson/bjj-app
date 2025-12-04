@@ -1,85 +1,50 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { getTechniques } from '@/lib/api'
 
-// Exempel på tekniker - detta kan senare flyttas till backend/databas
-const techniquesData = [
-  {
-    id: 1,
-    name: 'Armbar från Guard',
-    category: 'Submissions',
-    position: 'Guard',
-    difficulty: 'Nybörjare',
-    description: 'En klassisk submission där du bryter motståndarens arm från guard-position.',
-    videoUrl: '',
-  },
-  {
-    id: 2,
-    name: 'Triangle Choke',
-    category: 'Submissions',
-    position: 'Guard',
-    difficulty: 'Mellan',
-    description: 'Kväver motståndaren med dina ben i en triangel runt nacke och arm.',
-    videoUrl: '',
-  },
-  {
-    id: 3,
-    name: 'Berimbolo',
-    category: 'Sweeps',
-    position: 'De La Riva',
-    difficulty: 'Avancerad',
-    description: 'En avancerad sweep som involverar att rulla under motståndaren.',
-    videoUrl: '',
-  },
-  {
-    id: 4,
-    name: 'Kimura',
-    category: 'Submissions',
-    position: 'Olika',
-    difficulty: 'Nybörjare',
-    description: 'Ett kraftfullt skulderlås som kan appliceras från många positioner.',
-    videoUrl: '',
-  },
-  {
-    id: 5,
-    name: 'Scissor Sweep',
-    category: 'Sweeps',
-    position: 'Closed Guard',
-    difficulty: 'Nybörjare',
-    description: 'En grundläggande sweep från closed guard.',
-    videoUrl: '',
-  },
-  {
-    id: 6,
-    name: 'Rear Naked Choke',
-    category: 'Submissions',
-    position: 'Back Control',
-    difficulty: 'Nybörjare',
-    description: 'Den mest vanliga submissionen från back control.',
-    videoUrl: '',
-  },
-]
-
-const categories = ['Alla', 'Submissions', 'Sweeps', 'Passes', 'Escapes']
+const categories = ['Alla', 'Submissions', 'Sweeps', 'Passes', 'Escapes', 'Takedowns', 'Positions', 'Defenses']
 const difficulties = ['Alla', 'Nybörjare', 'Mellan', 'Avancerad']
 
 export default function TechniquesPage() {
+  const [techniques, setTechniques] = useState([])
+  const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('Alla')
   const [selectedDifficulty, setSelectedDifficulty] = useState('Alla')
   const [favorites, setFavorites] = useState([])
 
+  useEffect(() => {
+    fetchTechniques()
+    // Ladda favoriter från localStorage
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteTechniques') || '[]')
+    setFavorites(savedFavorites)
+  }, [])
+
+  const fetchTechniques = async () => {
+    try {
+      setLoading(true)
+      const data = await getTechniques()
+      setTechniques(data)
+    } catch (error) {
+      console.error('Kunde inte ladda tekniker:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const toggleFavorite = (id) => {
-    setFavorites(prev => 
-      prev.includes(id) 
-        ? prev.filter(fav => fav !== id)
-        : [...prev, id]
-    )
+    const newFavorites = favorites.includes(id) 
+      ? favorites.filter(fav => fav !== id)
+      : [...favorites, id]
+    
+    setFavorites(newFavorites)
+    localStorage.setItem('favoriteTechniques', JSON.stringify(newFavorites))
   }
 
   // Filtrera tekniker baserat på sök och filter
-  const filteredTechniques = techniquesData.filter(tech => {
+  const filteredTechniques = techniques.filter(tech => {
     const matchesSearch = tech.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          tech.description.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesCategory = selectedCategory === 'Alla' || tech.category === selectedCategory
@@ -95,6 +60,28 @@ export default function TechniquesPage() {
       case 'Avancerad': return 'bg-red-100 text-red-800'
       default: return 'bg-gray-100 text-gray-800'
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <nav className="bg-bjj-primary text-white shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <Link href="/" className="flex items-center text-2xl font-bold">
+                🥋 BJJ Träningsapp
+              </Link>
+            </div>
+          </div>
+        </nav>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bjj-primary mx-auto"></div>
+            <p className="mt-4 text-gray-600">Laddar tekniker...</p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -183,20 +170,25 @@ export default function TechniquesPage() {
           <div className="card text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
             <h2 className="text-xl font-semibold mb-2">Inga tekniker hittades</h2>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
               Prova att ändra dina sökfilter
             </p>
+            {techniques.length === 0 && (
+              <p className="text-sm text-gray-500">
+                Kör <code className="bg-gray-200 px-2 py-1 rounded">npm run seed</code> i backend för att lägga till exempel-tekniker
+              </p>
+            )}
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredTechniques.map((technique) => (
-              <div key={technique.id} className="card relative">
+              <div key={technique._id} className="card relative">
                 {/* Favorite Button */}
                 <button
-                  onClick={() => toggleFavorite(technique.id)}
+                  onClick={() => toggleFavorite(technique._id)}
                   className="absolute top-4 right-4 text-2xl hover:scale-110 transition-transform"
                 >
-                  {favorites.includes(technique.id) ? '⭐' : '☆'}
+                  {favorites.includes(technique._id) ? '⭐' : '☆'}
                 </button>
 
                 <div className="mb-4">
@@ -210,6 +202,11 @@ export default function TechniquesPage() {
                     <span className={`text-xs px-2 py-1 rounded ${difficultyColor(technique.difficulty)}`}>
                       {technique.difficulty}
                     </span>
+                    {technique.beltLevel && technique.beltLevel !== 'All' && (
+                      <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
+                        {technique.beltLevel}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -220,6 +217,15 @@ export default function TechniquesPage() {
                   <p className="text-sm text-gray-700">
                     {technique.description}
                   </p>
+                  {technique.tags && technique.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {technique.tags.map(tag => (
+                        <span key={tag} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <button className="btn-secondary w-full text-sm">
@@ -233,11 +239,15 @@ export default function TechniquesPage() {
         {/* Info Box */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="font-semibold text-blue-900 mb-2">💡 Information</h3>
-          <p className="text-sm text-blue-800">
-            Detta är ett exempel på teknikbibliotek med hårdkodad data. 
-            Vi kan senare lägga till detta i databasen så att du kan lägga till egna tekniker, 
-            ladda upp videor, skriva detaljerade anteckningar och mycket mer!
+          <p className="text-sm text-blue-800 mb-2">
+            Teknikerna hämtas nu från databasen! Du kan:
           </p>
+          <ul className="text-sm text-blue-800 space-y-1">
+            <li>• Lägga till fler tekniker via backend API</li>
+            <li>• Ladda upp videor och bilder (kommande funktion)</li>
+            <li>• Skapa detaljerade steg-för-steg guider</li>
+            <li>• Dela tekniker med andra användare</li>
+          </ul>
         </div>
       </main>
     </div>

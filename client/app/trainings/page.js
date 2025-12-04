@@ -128,8 +128,13 @@ export default function TrainingsPage() {
                   <h3 className="text-xl font-bold text-bjj-primary">
                     {training.technique}
                   </h3>
-                  <span className="text-xs bg-bjj-accent text-white px-2 py-1 rounded">
-                    BJJ
+                  <span className={`text-xs px-2 py-1 rounded text-white ${
+                    training.type === 'Gi' ? 'bg-blue-600' :
+                    training.type === 'No-Gi' ? 'bg-purple-600' :
+                    training.type === 'Sparring' ? 'bg-red-600' :
+                    'bg-bjj-accent'
+                  }`}>
+                    {training.type || 'BJJ'}
                   </span>
                 </div>
                 
@@ -137,10 +142,41 @@ export default function TrainingsPage() {
                   <p className="text-sm text-gray-600">
                     <span className="font-semibold">Instruktör:</span> {training.instructor}
                   </p>
-                  {training.createdAt && (
-                    <p className="text-xs text-gray-500">
-                      {new Date(training.createdAt).toLocaleDateString('sv-SE')}
+                  {training.duration && (
+                    <p className="text-sm text-gray-600">
+                      <span className="font-semibold">Längd:</span> {training.duration} min
                     </p>
+                  )}
+                  {training.sparringPartner && (
+                    <p className="text-sm text-gray-600">
+                      <span className="font-semibold">Partner:</span> {training.sparringPartner}
+                    </p>
+                  )}
+                  {training.date && (
+                    <p className="text-xs text-gray-500">
+                      📅 {new Date(training.date).toLocaleDateString('sv-SE')}
+                    </p>
+                  )}
+                  
+                  {/* Ratings */}
+                  {(training.mood || training.energy || training.difficulty) && (
+                    <div className="flex gap-3 pt-2">
+                      {training.mood && (
+                        <span className="text-xs bg-yellow-100 px-2 py-1 rounded">
+                          😊 {training.mood}/5
+                        </span>
+                      )}
+                      {training.energy && (
+                        <span className="text-xs bg-green-100 px-2 py-1 rounded">
+                          ⚡ {training.energy}/5
+                        </span>
+                      )}
+                      {training.difficulty && (
+                        <span className="text-xs bg-orange-100 px-2 py-1 rounded">
+                          🎯 {training.difficulty}/5
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
 
