@@ -79,6 +79,12 @@ export default function Navigation() {
             >
               Videos
             </Link>
+            <Link 
+              href="/social" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/social') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Community
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"
