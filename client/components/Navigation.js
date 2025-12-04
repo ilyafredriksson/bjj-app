@@ -67,6 +67,12 @@ export default function Navigation() {
             >
               Progression
             </Link>
+            <Link 
+              href="/sparring" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/sparring') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Sparring Stats
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"
