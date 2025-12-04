@@ -98,6 +98,14 @@ export default function Home() {
               Spåra skador, förebygg problem och återhämtning
             </p>
           </Link>
+
+          <Link href="/competition" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">🏆</div>
+            <h2 className="text-2xl font-bold mb-2">Competition Prep</h2>
+            <p className="text-gray-600">
+              Planera tävlingar och spåra viktförändringar
+            </p>
+          </Link>
         </div>
 
         {/* Quick Actions */}

@@ -97,6 +97,12 @@ export default function Navigation() {
             >
               Injury Tracking
             </Link>
+            <Link 
+              href="/competition" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/competition') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Competition
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"
