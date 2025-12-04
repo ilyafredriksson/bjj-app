@@ -73,6 +73,12 @@ export default function Navigation() {
             >
               Sparring Stats
             </Link>
+            <Link 
+              href="/videos" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/videos') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Videos
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"

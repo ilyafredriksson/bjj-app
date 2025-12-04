@@ -66,6 +66,14 @@ export default function Home() {
               Win/loss ratio, submissions och partner statistik
             </p>
           </Link>
+
+          <Link href="/videos" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">📹</div>
+            <h2 className="text-2xl font-bold mb-2">Teknik Videos</h2>
+            <p className="text-gray-600">
+              YouTube tutorials och ditt personliga video-bibliotek
+            </p>
+          </Link>
         </div>
 
         {/* Quick Actions */}
