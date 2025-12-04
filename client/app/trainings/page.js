@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getTrainings, deleteTraining } from '@/lib/api'
+import Navigation from '@/components/Navigation'
+import LoadingSkeleton from '@/components/LoadingSkeleton'
+import toast from 'react-hot-toast'
 
 export default function TrainingsPage() {
   const [trainings, setTrainings] = useState([])
@@ -22,6 +25,7 @@ export default function TrainingsPage() {
       setError(null)
     } catch (err) {
       setError('Kunde inte ladda träningar. Är backend-servern igång?')
+      toast.error('Kunde inte ladda träningar')
       console.error(err)
     } finally {
       setLoading(false)
@@ -33,67 +37,47 @@ export default function TrainingsPage() {
     
     try {
       await deleteTraining(id)
-      // Ta bort från listan lokalt
       setTrainings(trainings.filter(t => t._id !== id))
+      toast.success('Träning borttagen')
     } catch (err) {
-      alert('Kunde inte ta bort träning')
+      toast.error('Kunde inte ta bort träning')
       console.error(err)
     }
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <nav className="bg-bjj-primary text-white shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <Link href="/" className="flex items-center text-2xl font-bold">
-                🥋 BJJ Träningsapp
-              </Link>
-            </div>
-          </div>
-        </nav>
+      <div className="min-h-screen">
+        <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bjj-primary mx-auto"></div>
-            <p className="mt-4 text-gray-600">Laddar träningar...</p>
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">Mina Träningar</h1>
           </div>
+          <LoadingSkeleton type="card" count={3} />
+        </div>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <LoadingSkeleton type="card" count={3} />
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-bjj-primary text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <Link href="/" className="flex items-center text-2xl font-bold">
-              🥋 BJJ Träningsapp
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="hover:text-bjj-accent transition-colors">
-                Hem
-              </Link>
-              <Link href="/trainings" className="hover:text-bjj-accent transition-colors font-semibold">
-                Träningslogg
-              </Link>
-              <Link href="/techniques" className="hover:text-bjj-accent transition-colors">
-                Teknikbibliotek
-              </Link>
-              <Link href="/stats" className="hover:text-bjj-accent transition-colors">
-                Statistik
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen">
+      <Navigation />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Träningslogg</h1>
+          <h1 className="text-3xl font-bold">Träningslogg</h1>
           <Link href="/trainings/new">
             <button className="btn-primary">
               + Ny träning

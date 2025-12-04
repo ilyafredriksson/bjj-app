@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getTechniques } from '@/lib/api'
+import Navigation from '@/components/Navigation'
 
 const categories = ['Alla', 'Submissions', 'Sweeps', 'Passes', 'Escapes', 'Takedowns', 'Positions', 'Defenses']
 const difficulties = ['Alla', 'Nybörjare', 'Mellan', 'Avancerad']
@@ -64,20 +65,12 @@ export default function TechniquesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <nav className="bg-bjj-primary text-white shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <Link href="/" className="flex items-center text-2xl font-bold">
-                🥋 BJJ Träningsapp
-              </Link>
-            </div>
-          </div>
-        </nav>
+      <div className="min-h-screen">
+        <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bjj-primary mx-auto"></div>
-            <p className="mt-4 text-gray-600">Laddar tekniker...</p>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Laddar tekniker...</p>
           </div>
         </div>
       </div>
@@ -85,35 +78,19 @@ export default function TechniquesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-bjj-primary text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <Link href="/" className="flex items-center text-2xl font-bold">
-              🥋 BJJ Träningsapp
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="hover:text-bjj-accent transition-colors">
-                Hem
-              </Link>
-              <Link href="/trainings" className="hover:text-bjj-accent transition-colors">
-                Träningslogg
-              </Link>
-              <Link href="/techniques" className="hover:text-bjj-accent transition-colors font-semibold">
-                Teknikbibliotek
-              </Link>
-              <Link href="/stats" className="hover:text-bjj-accent transition-colors">
-                Statistik
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen">
+      <Navigation />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Teknikbibliotek</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Teknikbibliotek</h1>
+          <Link href="/techniques/new">
+            <button className="btn-primary">
+              + Lägg till teknik
+            </button>
+          </Link>
+        </div>
 
         {/* Search and Filters */}
         <div className="card mb-8">

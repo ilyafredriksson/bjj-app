@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createTraining } from '@/lib/api'
+import Navigation from '@/components/Navigation'
+import toast from 'react-hot-toast'
 
 export default function NewTrainingPage() {
   const router = useRouter()
@@ -45,9 +47,10 @@ export default function NewTrainingPage() {
         Object.entries(formData).filter(([_, v]) => v !== '')
       )
       await createTraining(dataToSend)
+      toast.success('Träning skapad!')
       router.push('/trainings')
     } catch (error) {
-      alert('Kunde inte skapa träning. Är backend-servern igång?')
+      toast.error('Kunde inte skapa träning. Är backend-servern igång?')
       console.error(error)
     } finally {
       setLoading(false)
@@ -55,36 +58,19 @@ export default function NewTrainingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-bjj-primary text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <Link href="/" className="flex items-center text-2xl font-bold">
-              🥋 BJJ Träningsapp
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="hover:text-bjj-accent transition-colors">
-                Hem
-              </Link>
-              <Link href="/trainings" className="hover:text-bjj-accent transition-colors">
-                Träningslogg
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen">
+      <Navigation />
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-6">
-          <Link href="/trainings" className="text-bjj-primary hover:text-bjj-accent">
+          <Link href="/trainings" className="text-bjj-primary hover:text-bjj-accent dark:text-bjj-accent">
             ← Tillbaka till träningsloggen
           </Link>
         </div>
 
         <div className="card">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Lägg till ny träning</h1>
+          <h1 className="text-3xl font-bold mb-6">Lägg till ny träning</h1>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Grundläggande info */}

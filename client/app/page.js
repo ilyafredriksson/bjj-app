@@ -1,40 +1,18 @@
 import Link from 'next/link'
+import Navigation from '@/components/Navigation'
 
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Navigation */}
-      <nav className="bg-bjj-primary text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <span className="text-2xl font-bold">🥋 BJJ Träningsapp</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="hover:text-bjj-accent transition-colors">
-                Hem
-              </Link>
-              <Link href="/trainings" className="hover:text-bjj-accent transition-colors">
-                Träningslogg
-              </Link>
-              <Link href="/techniques" className="hover:text-bjj-accent transition-colors">
-                Teknikbibliotek
-              </Link>
-              <Link href="/stats" className="hover:text-bjj-accent transition-colors">
-                Statistik
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold mb-4">
             Välkommen till din BJJ Träningsapp
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 dark:text-gray-400">
             Logga träningar, lär dig tekniker och förbättra din progression
           </p>
         </div>
@@ -44,7 +22,7 @@ export default function Home() {
           <Link href="/trainings" className="card hover:scale-105 transition-transform">
             <div className="text-4xl mb-4">📝</div>
             <h2 className="text-2xl font-bold mb-2">Träningslogg</h2>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               Dokumentera dina träningspass och sparring-sessioner
             </p>
           </Link>

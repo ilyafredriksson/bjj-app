@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getTrainingById, updateTraining, deleteTraining } from '@/lib/api'
+import Navigation from '@/components/Navigation'
+import toast from 'react-hot-toast'
 
 export default function TrainingDetailPage() {
   const params = useParams()
@@ -53,8 +55,9 @@ export default function TrainingDetailPage() {
       const updated = await updateTraining(params.id, formData)
       setTraining(updated)
       setEditing(false)
+      toast.success('Träning uppdaterad!')
     } catch (error) {
-      alert('Kunde inte uppdatera träning')
+      toast.error('Kunde inte uppdatera träning')
       console.error(error)
     }
   }
@@ -64,29 +67,22 @@ export default function TrainingDetailPage() {
     
     try {
       await deleteTraining(params.id)
+      toast.success('Träning borttagen')
       router.push('/trainings')
     } catch (error) {
-      alert('Kunde inte ta bort träning')
+      toast.error('Kunde inte ta bort träning')
       console.error(error)
     }
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <nav className="bg-bjj-primary text-white shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <Link href="/" className="flex items-center text-2xl font-bold">
-                🥋 BJJ Träningsapp
-              </Link>
-            </div>
-          </div>
-        </nav>
+      <div className="min-h-screen">
+        <Navigation />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bjj-primary mx-auto"></div>
-            <p className="mt-4 text-gray-600">Laddar träning...</p>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Laddar träning...</p>
           </div>
         </div>
       </div>
@@ -95,19 +91,11 @@ export default function TrainingDetailPage() {
 
   if (!training) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <nav className="bg-bjj-primary text-white shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <Link href="/" className="flex items-center text-2xl font-bold">
-                🥋 BJJ Träningsapp
-              </Link>
-            </div>
-          </div>
-        </nav>
+      <div className="min-h-screen">
+        <Navigation />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="card text-center">
-            <p className="text-gray-600">Träning hittades inte</p>
+            <p className="text-gray-600 dark:text-gray-400">Träning hittades inte</p>
             <Link href="/trainings" className="text-bjj-primary hover:text-bjj-accent mt-4 inline-block">
               Tillbaka till träningsloggen
             </Link>
@@ -118,30 +106,13 @@ export default function TrainingDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-bjj-primary text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <Link href="/" className="flex items-center text-2xl font-bold">
-              🥋 BJJ Träningsapp
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="hover:text-bjj-accent transition-colors">
-                Hem
-              </Link>
-              <Link href="/trainings" className="hover:text-bjj-accent transition-colors">
-                Träningslogg
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen">
+      <Navigation />
 
       {/* Main Content */}
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-6">
-          <Link href="/trainings" className="text-bjj-primary hover:text-bjj-accent">
+          <Link href="/trainings" className="text-bjj-primary hover:text-bjj-accent dark:text-bjj-accent">
             ← Tillbaka till träningsloggen
           </Link>
         </div>
