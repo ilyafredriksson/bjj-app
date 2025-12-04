@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createTraining } from '@/lib/api'
 import Navigation from '@/components/Navigation'
@@ -9,11 +9,15 @@ import toast from 'react-hot-toast'
 
 export default function NewTrainingPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
+  
+  const preselectedDate = searchParams.get('date') || new Date().toISOString().split('T')[0]
+  
   const [formData, setFormData] = useState({
     technique: '',
     instructor: '',
-    date: new Date().toISOString().split('T')[0], // Today's date
+    date: preselectedDate,
     duration: '',
     notes: '',
     sparringPartner: '',

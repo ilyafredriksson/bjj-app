@@ -42,6 +42,14 @@ export default function Home() {
               Se din progression och utveckling över tid
             </p>
           </Link>
+
+          <Link href="/calendar" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">📅</div>
+            <h2 className="text-2xl font-bold mb-2">Kalender</h2>
+            <p className="text-gray-600">
+              Visuell översikt och streak tracking
+            </p>
+          </Link>
         </div>
 
         {/* Quick Actions */}
