@@ -50,6 +50,14 @@ export default function Home() {
               Visuell översikt och streak tracking
             </p>
           </Link>
+
+          <Link href="/progression" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">🥋</div>
+            <h2 className="text-2xl font-bold mb-2">Belt Progression</h2>
+            <p className="text-gray-600">
+              Följ din bältesprogression och milstolpar
+            </p>
+          </Link>
         </div>
 
         {/* Quick Actions */}

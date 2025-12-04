@@ -61,6 +61,12 @@ export default function Navigation() {
             >
               Kalender
             </Link>
+            <Link 
+              href="/progression" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/progression') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Progression
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"
