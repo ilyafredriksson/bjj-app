@@ -12,7 +12,10 @@ app.use(cors());// tillåta förfrågningar från andra domän
 app.use(bodyParser.urlencoded({ extended: true}))// stöd  för JSON-data i inkommande förfrågningar
 app.use(express.json())
 
+// Routes
 app.use('/api/trainings', require('./routes/trainingRoutes'))
+app.use('/api/techniques', require('./routes/techniqueRoutes'))
+app.use('/api/auth', require('./routes/authRoutes'))
 
 //Anslutning till  MongoDB
 mongoose.connect(process.env.MONGO_URI) // Ansluter till databasen.})
