@@ -106,6 +106,22 @@ export default function Home() {
               Planera tävlingar och spåra viktförändringar
             </p>
           </Link>
+
+          <Link href="/drills" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">🎯</div>
+            <h2 className="text-2xl font-bold mb-2">Drill Builder</h2>
+            <p className="text-gray-600">
+              Skapa anpassade drills med steg-för-steg timer
+            </p>
+          </Link>
+
+          <Link href="/goals" className="card hover:scale-105 transition-transform">
+            <div className="text-4xl mb-4">🏆</div>
+            <h2 className="text-2xl font-bold mb-2">Goals & Milestones</h2>
+            <p className="text-gray-600">
+              Sätt mål och spåra din progression med milstolpar
+            </p>
+          </Link>
         </div>
 
         {/* Quick Actions */}

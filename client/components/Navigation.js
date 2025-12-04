@@ -103,6 +103,18 @@ export default function Navigation() {
             >
               Competition
             </Link>
+            <Link 
+              href="/drills" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/drills') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Drills
+            </Link>
+            <Link 
+              href="/goals" 
+              className={`hover:text-bjj-accent transition-colors ${isActive('/goals') ? 'font-semibold text-bjj-accent' : ''}`}
+            >
+              Goals
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"
